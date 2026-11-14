@@ -1,4 +1,7 @@
 {
+  "id": "/",
+  "lang": "sk",
+  "dir": "ltr",
   "name": "IFJ26 Table Maker",
   "short_name": "Table Maker",
   "description": "Návrh LL a precedenčnej tabuľky pre prekladač IFJ26",
