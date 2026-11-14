@@ -23,7 +23,7 @@ Live (tailnet only): https://t3-exec.tailedbcdc.ts.net:4310/
 | Path | Purpose |
 | --- | --- |
 | `src/lib/grammar.ts` | Grammar parser, Empty/First/Follow/Predict, LL table, LL simulation |
-| `src/lib/precedence.ts` | Precedence table generator, checks, precedence simulation |
+| `src/lib/precedence.ts` | Precedence table helpers, checks, precedence simulation |
 | `src/lib/exports.ts` | Markdown / CSV / LaTeX / C exports |
 | `src/server/db.server.ts` | SQLite connection + migrations (`PRAGMA user_version`) |
 | `src/server/projects.server.ts` | Projects and snapshots (history) |
