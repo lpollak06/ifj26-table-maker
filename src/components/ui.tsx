@@ -140,7 +140,7 @@ export function PrimaryButton({
 // Prompt: "ok its looks good i agree with the findings, now i want you to dig into the problem and implement the changes"
 // Changes: Visible outline focus ring (was outline-none + 30 % ring); readable placeholder.
 export const fieldClass =
-  'w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2 font-mono text-[13px] leading-relaxed text-zinc-100 placeholder:text-zinc-500 focus:border-indigo-400/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400'
+  'w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2 font-mono text-[13px] leading-relaxed text-zinc-100 placeholder:text-zinc-400 focus:border-indigo-400/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400'
 
 export function TextArea({ className, ...props }: TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return <textarea spellCheck={false} className={cx(fieldClass, 'resize-y', className)} {...props} />
