@@ -4,7 +4,7 @@
 
 import { describe, expect, it } from 'vitest'
 import type { TableModel } from '#/lib/tableModel'
-import { cellDetail, pickTableModel } from './llGrid'
+import { cellDetail, pickTableModel } from '#/lib/tableModel'
 
 const cell = (text: string, title = '', conflict = false) => ({ text, title, conflict })
 const model: TableModel = {

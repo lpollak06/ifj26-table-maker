@@ -4,6 +4,7 @@
 //          or traps focus), Shift+Tab is never taken, Enter is IME-safe; plus the completion count announcement.
 
 import { isCommitEnter } from './keyboard'
+import { ARROWS } from '#/lib/symbols'
 
 export type RulesKeyAction = 'next' | 'prev' | 'accept' | 'close' | 'open' | 'showAll'
 
@@ -46,7 +47,8 @@ export function rulesEditorKey(e: RulesKey, ctx: RulesKeyContext): RulesKeyActio
 }
 
 // After `->`, `→`, `::=` or `|` with nothing typed yet, and not inside a quoted symbol.
-const emptyRightSide = (before: string) => /(->|→|::=|\|)\s*$/.test(before) && !/'[^']*$|"[^"]*$/.test(before)
+const RHS_START = new RegExp(`(${[...ARROWS, '|'].map((a) => a.replace(/[|\\^$*+?.()[\]{}]/g, '\\$&')).join('|')})\\s*$`)
+const emptyRightSide = (before: string) => RHS_START.test(before) && !/'[^']*$|"[^"]*$/.test(before)
 
 /** Polite screen-reader announcement of the completion list ('' = nothing to say). */
 export function suggestionAnnouncement(count: number): string {

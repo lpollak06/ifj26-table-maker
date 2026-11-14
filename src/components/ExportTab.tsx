@@ -151,7 +151,7 @@ export function ExportTab({
         <Panel title="Projekt">
           <Help>
             Projekt sa automaticky ukladá do SQLite databázy na serveri. JSON súbor slúži na zdieľanie mimo aplikácie alebo
-            commit do repozitára; je kompatibilný s pôvodnou HTML verziou nástroja.
+            commit do repozitára. Import prijme aj súbory z pôvodnej HTML verzie nástroja.
           </Help>
           <div className="mt-3 flex flex-wrap gap-2">
             <PrimaryButton onClick={() => downloadText(projectFileName(name), JSON.stringify(data, null, 2) + '\n', 'application/json')}>

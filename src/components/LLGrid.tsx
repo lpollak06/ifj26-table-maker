@@ -8,7 +8,7 @@
 import { useId, useRef, useState, type KeyboardEvent, type Ref } from 'react'
 import type { TableCell, TableModel } from '#/lib/tableModel'
 import { clampCell, gridMove, type GridCell } from './gridFocus'
-import { cellDetail } from './llGrid'
+import { cellDetail } from '#/lib/tableModel'
 import { cx, headCell, tableCell } from './ui'
 
 export interface CellMark {

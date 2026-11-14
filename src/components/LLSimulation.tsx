@@ -21,7 +21,7 @@ import { EOF, endMarker, llCellKey, reducedTable, simulateLL, type LLAnalysis } 
 import { llTableModel } from '#/lib/tableModel'
 import { Button, Help, Label, Panel, ResultLine, Segmented, TextInput, cx } from './ui'
 import { LLGrid } from './LLGrid'
-import { pickTableModel } from './llGrid'
+import { pickTableModel } from '#/lib/tableModel'
 import { ARROW_CONSUMERS, simStep } from './simKeys'
 import { SplitLayout } from './SplitLayout'
 

@@ -357,7 +357,8 @@ describe('view state', () => {
     const { fake, session, state } = setup()
     session.updateView(step(4))
     expect(state().view.llSim.step).toBe(4)
-    expect(state().unsaved).toBe(true)
+    // View state never arms the leave-page prompt; only document edits do.
+    expect(state().unsaved).toBe(false)
 
     await vi.advanceTimersByTimeAsync(600)
     expect(fake.callsOf('saveView')).toHaveLength(1)
