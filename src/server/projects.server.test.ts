@@ -184,6 +184,7 @@ describe('reading a snapshot', () => {
     expect(store.getSnapshot(snap.id)).toEqual({
       id: snap.id,
       projectId: project.id,
+      draftId: null,
       label: 'Verzia 1',
       kind: 'named',
       auto: false,
