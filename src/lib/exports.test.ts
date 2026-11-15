@@ -7,8 +7,9 @@ import { analyzeGrammar } from './analysis'
 import { EXPORTS, buildExport, exportInputs, type ExportKind } from './exports'
 import { loadPrecExample } from './precOps'
 import { defaultProjectData, type ProjectData } from './project'
+import { grammarSource } from './projectAnalysis'
 
-const grammarOf = (d: ProjectData) => analyzeGrammar({ rules: d.ll.grammar, ...d.def })
+const grammarOf = (d: ProjectData) => analyzeGrammar(grammarSource(d))
 
 function filled(): ProjectData {
   const d = loadPrecExample(defaultProjectData())
