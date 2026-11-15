@@ -23,12 +23,33 @@ describe('the adopt dialog choices', () => {
     const choices = adoptChoices(draftChanges({ draft, project, base }))
 
     expect(choices).toEqual({
-      definition: { selectable: false, bothSides: false },
-      grammarRules: { selectable: true, bothSides: false },
-      precTable: { selectable: false, bothSides: false },
-      reductionRules: { selectable: true, bothSides: true },
+      definition: { selectable: false, bothSides: false, projectOnly: false },
+      grammarRules: { selectable: true, bothSides: false, projectOnly: false },
+      precTable: { selectable: false, bothSides: false, projectOnly: false },
+      reductionRules: { selectable: true, bothSides: true, projectOnly: false },
     })
     expect(initialSelection(choices)).toEqual(['grammarRules'])
+  })
+
+  it('a part changed only in the project is unchanged in the draft: it cannot be ticked, so adopting never reverts the newer project work', () => {
+    const base = parts()
+    const project = parts({ grammarRules: 'E -> id + E', precTable: { terminals: ['+', 'id'], cells: {} } })
+    const draft = parts({ reductionRules: 'E -> id + id' })
+    const choices = adoptChoices(draftChanges({ draft, project, base }))
+
+    expect(choices.grammarRules).toEqual({ selectable: false, bothSides: false, projectOnly: true })
+    expect(choices.precTable).toEqual({ selectable: false, bothSides: false, projectOnly: true })
+    expect(choices.reductionRules).toEqual({ selectable: true, bothSides: false, projectOnly: false })
+    expect(initialSelection(choices)).toEqual(['reductionRules'])
+  })
+
+  it('a part the project and the draft changed differently counts as changed on both sides', () => {
+    const base = parts()
+    const project = parts({ grammarRules: 'E -> id + E' })
+    const draft = parts({ grammarRules: 'E -> id | id + id' })
+    const choices = adoptChoices(draftChanges({ draft, project, base }))
+    expect(choices.grammarRules).toEqual({ selectable: true, bothSides: true, projectOnly: false })
+    expect(initialSelection(choices)).toEqual([])
   })
 
   it('warns when the definition is adopted without changed grammar rules, or the other way round', () => {
