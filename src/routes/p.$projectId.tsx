@@ -398,7 +398,7 @@ function Editor({ project, draft, drafts }: { project: ProjectRecord; draft: Dra
           <DraftBanner
             draft={session.draft}
             readOnly={readOnly}
-            onAdopt={() => setAdopting({ project, refreshed: false })}
+            onAdopt={() => setAdopting({ project: session.project ?? project, refreshed: false })}
             onDiscard={() => void discard()}
           />
         )}
