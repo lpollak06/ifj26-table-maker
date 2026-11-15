@@ -78,7 +78,7 @@ const RESOLVERS: Record<TargetKind, Resolver> = {
   snapshot(id, store) {
     const snapshotId = typeof id === 'number' ? id : /^\d+$/.test(id) ? Number(id) : NaN
     const snapshot = Number.isSafeInteger(snapshotId) ? store.getSnapshot(snapshotId) : null
-    if (!snapshot) throw new ToolError(`No snapshot with id ${JSON.stringify(id)}. Use list_snapshots on a project to find snapshot ids.`)
+    if (!snapshot) throw new ToolError(`No snapshot with id ${JSON.stringify(id)}. Use list_snapshots on a project or draft to find snapshot ids.`)
     const project = projectOf(store, snapshot.projectId)
     return {
       ref: {

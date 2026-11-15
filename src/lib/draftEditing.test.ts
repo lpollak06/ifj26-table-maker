@@ -195,7 +195,7 @@ describe('an open draft refreshes live', () => {
 
   it('a draft the agent discarded becomes read-only', async () => {
     const { fake, draft, session, state } = await openDraft()
-    fake.agentDiscard(draft.id)
+    fake.discardDraft(draft.id)
     await vi.advanceTimersByTimeAsync(DRAFT_POLL_MS)
     expect(state()).toMatchObject({ readOnly: true, draft: { state: 'discarded' } })
     session.edit(setRelation)
@@ -235,11 +235,27 @@ describe('export naming and simulation inputs in a draft view', () => {
 })
 
 describe('history operations of a draft', () => {
-  it('still refuse (draft history comes separately) and change nothing', async () => {
-    const { fake, session } = await openDraft()
-    await expect(session.saveNamedVersion('x')).rejects.toThrow(/návrh/i)
-    await expect(session.restoreVersion(1)).rejects.toThrow(/návrh/i)
-    await expect(session.importData(defaultProjectData(), 'x')).rejects.toThrow(/návrh/i)
-    expect(fake.server.record?.revision).toBe(3)
+  it("a named version first saves the human's unsaved edits into the draft", async () => {
+    const { fake, session, server } = await openDraft()
+    session.edit(setRelation)
+
+    await session.saveNamedVersion('Pred úpravou')
+
+    expect(fake.callsOf('saveDraft')).toHaveLength(1)
+    expect(server().parts.precTable.cells).toEqual({ 'id\u0001+': '>' })
+    expect(fake.callsOf('createDraftSnapshot')).toHaveLength(1)
+  })
+
+  it('a restored draft is the base of the next per-part save (no self-conflict)', async () => {
+    const { fake, draft, session, state, server } = await openDraft()
+    const snapshot = await session.saveNamedVersion('Začiatok')
+    fake.agentEdit(draft.id, { grammarRules: AGENT_GRAMMAR })
+    await session.restoreVersion(snapshot.id)
+
+    session.edit(setGrammar('E -> id + E'))
+    await vi.advanceTimersByTimeAsync(600)
+
+    expect(state()).toMatchObject({ status: 'saved', conflictParts: [] })
+    expect(server().parts.grammarRules).toBe('E -> id + E')
   })
 })
